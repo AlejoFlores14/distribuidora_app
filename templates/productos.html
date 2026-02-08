@@ -22,6 +22,7 @@
             </tr>
         </thead>
         <tbody>
+        {% if productos %}
             {% for producto in productos %}
             <tr>
                 <td>{{ producto.id }}</td>
@@ -30,8 +31,18 @@
                 <td>{{ producto.precio }}</td>
                 <td>{{ producto.stock }}</td>
                 <td>{{ producto.categoria }}</td>
+                <td>
+                    <a href="{{ url_for('editar_producto', producto_id=producto.id) }}">Editar</a>
+                    |
+                    <a href="{{ url_for('eliminar_producto', producto_id=producto.id) }}" onclick="return confirm('¿Estás seguro de eliminar este producto?');">Eliminar</a>
+                </td>
             </tr>
             {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="7">No hay productos cargados</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
 
