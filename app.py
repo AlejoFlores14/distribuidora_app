@@ -3,18 +3,16 @@ from flask import Flask, render_template, request, redirect
 from db import crear_tablas, conectar
 app = Flask(__name__)
 crear_tablas()
-@app.route('/')
-def home():
-    return render_template('index.html')
 
-@app.route("/productos")
-def productos():
+
+@app.route("/")
+def home():
     conn = conectar()
     productos = conn.execute("SELECT * FROM productos").fetchall()
     for p in productos:
         print(dict(p))
     conn.close()
-    return render_template("productos.html", productos=productos)
+    return render_template("index.html", productos=productos)
 
 @app.route("/agregar_productos", methods=["GET", "POST"])
 def agregar_productos():
@@ -31,7 +29,7 @@ def agregar_productos():
         )
         conn.commit()
         conn.close()
-        return redirect("/productos")
+        return redirect("/")
     return render_template("agregar_productos.html")
 
 
