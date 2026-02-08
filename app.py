@@ -58,7 +58,7 @@ def eliminar_producto(producto_id):
     conn.execute("DELETE FROM productos WHERE id=?", (producto_id,))
     conn.commit()
     conn.close()
-    return redirect("/productos")
+    return redirect("/productos") 
 
 if __name__ == '__main__':
     app.run(debug=True)
