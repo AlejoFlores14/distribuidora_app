@@ -58,10 +58,14 @@ def eliminar_producto(producto_id):
     conn.execute("DELETE FROM productos WHERE id=?", (producto_id,))
     conn.commit()
     conn.close()
+
     return redirect("/productos")
 @app.route("/ventas")
 def ventas():
     return render_template("ventas.html")
+@app.route("/agregar_venta", methods=["GET", "POST"])
+def agregar_venta():
+    return render_template("agregar_venta.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
