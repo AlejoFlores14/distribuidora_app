@@ -9,11 +9,11 @@ def index():
 @app.route("/productos")
 def productos():
     conn = conectar()
-    productos = conn.execute("SELECT * FROM productos").fetchall()
-    for p in productos:
+    producto = conn.execute("SELECT * FROM productos").fetchall()
+    for p in producto:
         print(dict(p))
     conn.close()
-    return render_template("productos.html", productos=productos)
+    return render_template("productos.html", productos=producto)
 
 @app.route("/agregar_productos", methods=["GET", "POST"])
 def agregar_productos():
@@ -59,6 +59,9 @@ def eliminar_producto(producto_id):
     conn.commit()
     conn.close()
     return redirect("/productos")
+@app.route("/ventas")
+def ventas():
+    return render_template("ventas.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
