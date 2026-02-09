@@ -12,13 +12,21 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <h2 class="logo">📦 Distribuidora</h2>
-    <nav>
-      <a href="/productos" class="active">Productos</a>
-      <a href="#">Ventas</a>
-      <a href="#">Clientes</a>
-      <a href="#">Reportes</a>
-      <a href="#">Configuración</a>
-    </nav>
+     <nav>
+    <a href="/" class="{% if page == 'inicio' %}active{% endif %}">Inicio</a>
+
+    <a href="/productos" class="{% if page == 'productos' %}active{% endif %}">
+      Productos
+    </a>
+
+    <a href="/ventas" class="{% if page == 'ventas' %}active{% endif %}">
+      Ventas
+    </a>
+
+    <a href="/agregar_productos" class="{% if page == 'agregar_productos' %}active{% endif %}">
+      Agregar Producto
+    </a>
+  </nav>
   </aside>
 
   <!-- Main -->
@@ -45,6 +53,7 @@
             <th>Precio</th>
             <th>Stock</th>
             <th>Categoría</th>
+            <th>Acciones</th>
           </tr>
         </thead>
 
@@ -57,6 +66,9 @@
             <td>${{ producto.precio }}</td>
             <td>{{ producto.stock }}</td>
             <td>{{ producto.categoria }}</td>
+            <td><a href="/editar_producto/{{ producto.id }}" class="btn-edit">🖋️</a>
+                <a href="/eliminar_producto/{{ producto.id }}" class="btn-delete">🗑️</a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>

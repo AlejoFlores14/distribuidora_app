@@ -5,15 +5,15 @@ app = Flask(__name__)
 crear_tablas()
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", page = "inicio")
 @app.route("/productos")
 def productos():
     conn = conectar()
     producto = conn.execute("SELECT * FROM productos").fetchall()
     for p in producto:
-        print(dict(p))
+        print(dict(p)) 
     conn.close()
-    return render_template("productos.html", productos=producto)
+    return render_template("productos.html", productos=producto, page = "productos")
 
 @app.route("/agregar_productos", methods=["GET", "POST"])
 def agregar_productos():
@@ -31,7 +31,7 @@ def agregar_productos():
         conn.commit()
         conn.close()
         return redirect("/productos")
-    return render_template("agregar_productos.html")
+    return render_template("agregar_productos.html", page= "agregar_productos")
 @app.route("/editar_producto/<int:producto_id>", methods=["GET", "POST"])
 def editar_producto(producto_id):
     conn = conectar()
@@ -62,10 +62,10 @@ def eliminar_producto(producto_id):
     return redirect("/productos")
 @app.route("/ventas")
 def ventas():
-    return render_template("ventas.html")
+    return render_template("ventas.html", page = "ventas")
 @app.route("/agregar_venta", methods=["GET", "POST"])
 def agregar_venta():
-    return render_template("agregar_venta.html")
+    return render_template("agregar_venta.html", page = "agregar_venta")
 
 if __name__ == '__main__':
     app.run(debug=True)
