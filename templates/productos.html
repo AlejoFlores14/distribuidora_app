@@ -1,77 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
-    <title>productos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Productos - Distribuidora</title>
+<link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="app-container">
-        <aside class="sidebar">
-            <h2 class="logo">Menú</h2>
-                <nav class="nav">
-                    <ul>
-                        <li><a href="/">Inicio</a></li>
-                        <li><a href="/productos">Productos</a></li>
-                        <li><a href="/agregar_productos">Agregar Producto</a></li>
-                        <li><a href="/ventas">Ventas</a></li>
-                        <li><a href="/agregar_venta">Agregar Venta</a></li>
 
-                    </ul>
-                </nav>
-        </aside>
-    <main classs="main_content">
-        <header class="page_header"></header>
-            <h1>Productos</h1>
-            
-        </header>
-    <div class="filtro-container">
-            <input type="text" placeholder="Buscar producto..." class="search-input">
-            <!-- <select class="select">
-                <option>Todas las categorías</option>
-            </select> -->
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="logo">📦 Distribuidora</h2>
+    <nav>
+      <a href="/productos" class="active">Productos</a>
+      <a href="#">Ventas</a>
+      <a href="#">Clientes</a>
+      <a href="#">Reportes</a>
+      <a href="#">Configuración</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="content">
+
+    <header class="topbar">
+      <h1>Productos</h1>
+      <a href="/agregar_productos" class="btn-primary">+ Nuevo Producto</a>
+    </header>
+
+    <!-- Buscador -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Buscar por código o nombre...">
     </div>
-    <div class="table-container">
-        <h2>Lista de Productos</h2>
-        <p>Total productos: {{ productos|length }}</p>
-        <table border="1" cellpadding="5" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Código</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Categoría</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if productos %}
-                {% for producto in productos %}
-                <tr class="hover-row">
-                    <td>{{ producto.id }}</td>
-                    <td>{{ producto.nombre }}</td>
-                    <td>{{ producto.codigo }}</td>
-                    <td>{{ producto.precio }}</td>
-                    <td>{{ producto.stock }}</td>
-                    <td>{{ producto.categoria }}</td>
-                    <td>
-                        <a href="{{ url_for('editar_producto', producto_id=producto.id) }}">✏️</a>
-                        |
-                        <a href="{{ url_for('eliminar_producto', producto_id=producto.id) }}" onclick="return confirm('¿Estás seguro de eliminar este producto?');">🗑️</a>
-                    </td>
-                </tr>
-                {% endfor %}
-                {% else %}
-                <tr>
-                    <td colspan="7">No hay productos cargados</td>
-                </tr>
-                {% endif %}
-            </tbody>
-        </table>
+
+    <!-- Tabla -->
+    <div class="table-card">
+      <table id="productsTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Categoría</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for producto in productos %}
+          <tr>
+            <td>{{ producto.id }}</td>
+            <td class="codigo">{{ producto.codigo }}</td>
+            <td class="nombre">{{ producto.nombre }}</td>
+            <td>${{ producto.precio }}</td>
+            <td>{{ producto.stock }}</td>
+            <td>{{ producto.categoria }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
     </div>
-</main>
+
+  </main>
+</div>
+
+<script src="/static/search.js"></script>
 </body>
 </html>
