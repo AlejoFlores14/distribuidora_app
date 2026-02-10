@@ -36,16 +36,20 @@
         <table border="1" >
             <tr>
                 <th>ID</th>
-                <th>Producto</th>
                 <th>Fecha</th>
+                <th>nombre</th>
+                <th>cantidad</th>
+                <th>precio unitario</th>
                 <th>Total</th>
-            </tr>
+            </tr>   
             
             {% for v in ventas %}
             <tr>
-                <td>{{ v.id }}</td>
-                <td>{{ v.producto_nombre }}</td>
+                <td>{{ v.venta_id }}</td>
                 <td>{{ v.fecha }}</td>
+                <td>{{ v.nombre }}</td>
+                <td>{{ v.cantidad }}</td>
+                <td>${{ v.precio_unitario }}</td>
                 <td>${{ v.total }}</td>
             </tr>
             {% endfor %}

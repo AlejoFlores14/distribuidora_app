@@ -11,9 +11,21 @@ ventas_bp = Blueprint("ventas_bp", __name__)
 def ventas():
     conn = conectar()
     ventas = conn.execute("""
-        SELECT id, fecha, total
-        FROM ventas
-        ORDER BY fecha DESC
+        SELECT 
+            v.id AS venta_id,
+            v.fecha,
+            p.codigo AS codigo,
+            p.nombre AS nombre,
+            vp.cantidad AS cantidad,
+            vp.precio_unitario AS precio_unitario,
+            (vp.cantidad * vp.precio_unitario) AS subtotal,
+            v.total AS total
+        FROM ventas v
+        INNER JOIN venta_productos vp 
+            ON v.id = vp.venta_id
+        INNER JOIN productos p 
+            ON vp.producto_id = p.id
+        ORDER BY v.fecha DESC
     """).fetchall()
     conn.close()
 
