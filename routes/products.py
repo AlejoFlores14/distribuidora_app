@@ -1,3 +1,6 @@
+"""
+Docstring for routes.products
+"""
 from flask import blueprints, render_template, request, redirect
 from db import conectar
 
@@ -5,15 +8,17 @@ productos_bp = blueprints.Blueprint("productos_dp", __name__)
 
 @productos_bp.route("/productos")
 def productos():
+    """Lista de productos"""
     conn = conectar()
     producto = conn.execute("SELECT * FROM productos").fetchall()
     for p in producto:
-        print(dict(p)) 
+        print(dict(p))
     conn.close()
     return render_template("productos.html", productos=producto, page = "productos")
 
 @productos_bp.route("/agregar_productos", methods=["GET", "POST"])
 def agregar_productos():
+    """agregar productos"""
     if request.method == "POST":
         nombre = request.form["nombre"]
         codigo = request.form["codigo"]
@@ -31,6 +36,7 @@ def agregar_productos():
     return render_template("agregar_productos.html", page= "agregar_productos")
 @productos_bp.route("/editar_producto/<int:producto_id>", methods=["GET", "POST"])
 def editar_producto(producto_id):
+    """editar productos"""
     conn = conectar()
     if request.method == "POST":
         nombre = request.form["nombre"]
@@ -51,9 +57,9 @@ def editar_producto(producto_id):
     return render_template("editar_producto.html", producto=producto)
 @productos_bp.route("/eliminar_producto/<int:producto_id>")
 def eliminar_producto(producto_id):
+    """eliminar productos"""
     conn = conectar()
     conn.execute("DELETE FROM productos WHERE id=?", (producto_id,))
     conn.commit()
     conn.close()
-
     return redirect("/productos")

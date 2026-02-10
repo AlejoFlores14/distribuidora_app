@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
-    <title>Ventas</title>
+    <title>Document</title>
 </head>
 <body>
     <div class="app">
@@ -25,32 +25,28 @@
       Agregar Producto
     </a>
   </nav>
-</aside>
+  </aside>
 <main class="content"> 
+<h2>Nueva Venta</h2>
 
-    <header class="topbar">
-        <h1>Ventas</h1>
-        <a href="/agregar_venta" class="btn-primary">+ Nueva Venta</a>
-    </header>
-    <div class="table-card">
-        <table border="1" >
-            <tr>
-                <th>ID</th>
-                <th>Producto</th>
-                <th>Fecha</th>
-                <th>Total</th>
-            </tr>
-            
-            {% for v in ventas %}
-            <tr>
-                <td>{{ v.id }}</td>
-                <td>{{ v.producto_nombre }}</td>
-                <td>{{ v.fecha }}</td>
-                <td>${{ v.total }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
+<form method="POST">
+
+  <label>Producto</label>
+  <select name="producto_id" required>
+    {% for producto in productos %}
+      <option value="{{ producto.id }}">
+        {{ producto.nombre }} (Stock: {{ producto.stock }})
+      </option>
+    {% endfor %}
+  </select>
+
+  <label>Cantidad</label>
+  <input type="number" name="cantidad" required min="1">
+
+  <button type="submit">Registrar Venta</button>
+
+</form>
+
 </main>
 </div>
     <script src="/static/search.js"></script>

@@ -6,17 +6,19 @@ import os
 BASE_DIR =os.path.dirname(os.path.abspath(__file__))
 DB_NAME = os.path.join(BASE_DIR, "database.db")
 
-DB_NAME = 'database.db'
 def conectar():
+    """
+    conectar a la base de datos
+    """
     conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row
     return conn
 
 def crear_tablas():
+    """crear tablas"""
     conn = conectar()
-    cursor = conn.cursor()
 
-    cursor.execute("""
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS productos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT NOT NULL,
@@ -26,6 +28,23 @@ def crear_tablas():
             categoria TEXT NOT NULL
         )
     """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS ventas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+        total REAL
+        )
+    """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS venta_productos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            venta_id INTEGER,
+            producto_id INTEGER,
+            cantidad INTEGER,
+            precio_unitario REAL,
+            FOREIGN KEY (venta_id) REFERENCES ventas(id),
+            FOREIGN KEY (producto_id) REFERENCES productos(id)
+       )
+    """)
     conn.commit()
     conn.close()
-

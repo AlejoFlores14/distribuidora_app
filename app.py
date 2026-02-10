@@ -12,6 +12,9 @@ app.register_blueprint(ventas_bp)
 
 @app.route("/")
 def index():
+    """
+    index
+    """
     return render_template("index.html", page = "inicio")
 
 
