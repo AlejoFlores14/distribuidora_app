@@ -14,6 +14,7 @@ def ventas():
         SELECT 
             v.id AS venta_id,
             v.fecha,
+            c.nombre AS cliente_nombre,
             p.codigo AS codigo,
             p.nombre AS nombre,
             vp.cantidad AS cantidad,
@@ -21,10 +22,9 @@ def ventas():
             (vp.cantidad * vp.precio_unitario) AS subtotal,
             v.total AS total
         FROM ventas v
-        INNER JOIN venta_productos vp 
-            ON v.id = vp.venta_id
-        INNER JOIN productos p 
-            ON vp.producto_id = p.id
+        LEFT JOIN clientes c ON v.cliente_id = c.id
+        INNER JOIN venta_productos vp ON v.id = vp.venta_id
+        INNER JOIN productos p ON vp.producto_id = p.id
         ORDER BY v.fecha DESC
     """).fetchall()
     conn.close()
@@ -36,11 +36,12 @@ def ventas():
 def agregar_venta():
     conn = conectar()
     productos = conn.execute("SELECT * FROM productos").fetchall()
+    clientes = conn.execute("SELECT * FROM clientes").fetchall()
 
     if request.method == "POST":
         producto_id = int(request.form["producto_id"])
         cantidad = int(request.form["cantidad"])
-
+        cliente_id = int(request.form["cliente_id"]) 
         producto = conn.execute(
             "SELECT * FROM productos WHERE id=?",
             (producto_id,)
@@ -58,8 +59,8 @@ def agregar_venta():
 
         # Crear venta
         conn.execute(
-            "INSERT INTO ventas (total) VALUES (?)",
-            (total_venta,)
+            "INSERT INTO ventas (total, cliente_id) VALUES (?, ?)",
+            (total_venta, cliente_id)
         )
 
         venta_id = conn.execute(
@@ -86,4 +87,4 @@ def agregar_venta():
         return redirect("/ventas")
 
     conn.close()
-    return render_template("agregar_ventas.html", productos=productos, page="agregar_venta")
+    return render_template("agregar_ventas.html", productos=productos, clientes=clientes, page="agregar_venta")
