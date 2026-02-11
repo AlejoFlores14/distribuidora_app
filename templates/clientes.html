@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
-    <title>Distribuidora app</title>
+    <title>Clientes</title>
 </head>
 <body>
     <div class="app">
-    <aside class="sidebar">
-        <h2 class="logo">📦 Distribuidora</h2>
-         <nav>
+     <aside class="sidebar">
+    <h2 class="logo">📦 Distribuidora</h2>
+     <nav>
     <a href="/" class="{% if page == 'inicio' %}active{% endif %}">Inicio</a>
 
     <a href="/productos" class="{% if page == 'productos' %}active{% endif %}">
@@ -27,11 +27,35 @@
     <a href="/clientes" class="{% if page == 'clientes' %}active{% endif %}">
       Clientes
     </a>
-  </nav>
-    </aside>
-    <h1>Bienvenido a la Distribuidora</h1>
-        
-    </div>
-    <script src="/static/search.js"></script>
+</nav>
+
+  </aside>
+  <main class="content">
+  <header class="topbar">
+    <h1>Clientes</h1>
+    <a href="/agregar_cliente" class="btn-primary">+ Nuevo Cliente</a>
+  </header>
+
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Teléfono</th>
+      <th>Dirección</th>
+      <th>Email</th>
+    </tr>
+
+    {% for c in clientes %}
+    <tr>
+      <td>{{ c.id }}</td>
+      <td>{{ c.nombre }}</td>
+      <td>{{ c.telefono }}</td>
+      <td>{{ c.direccion }}</td>
+      <td>{{ c.email }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</main>
+  </div>
 </body>
-</html> 
+</html>

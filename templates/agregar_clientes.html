@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
-    <title>Distribuidora app</title>
+    <title>Document</title>
 </head>
 <body>
-    <div class="app">
-    <aside class="sidebar">
+<div class="app">
+<aside class="sidebar">
         <h2 class="logo">📦 Distribuidora</h2>
-         <nav>
+        <nav>
     <a href="/" class="{% if page == 'inicio' %}active{% endif %}">Inicio</a>
 
     <a href="/productos" class="{% if page == 'productos' %}active{% endif %}">
@@ -29,9 +29,19 @@
     </a>
   </nav>
     </aside>
-    <h1>Bienvenido a la Distribuidora</h1>
+  <main class="content">
+        <h2>Agregar cliente</h2>
         
-    </div>
-    <script src="/static/search.js"></script>
+        <form method="POST">
+            <input type="text" name="nombre" placeholder="Nombre" required><br><br>
+            <input type="text" name="telefono" placeholder="Teléfono" required><br><br>
+            <input type="text" name="direccion" placeholder="Dirección" required><br><br>
+            <input type="email" name="email" placeholder="Email"><br><br>
+            
+            <button type="submit">Guardar</button>
+        </form>
+    </main>
+</div>
 </body>
-</html> 
+<script src="/static/search.js"></script>
+</html>

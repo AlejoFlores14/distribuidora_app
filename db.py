@@ -46,5 +46,18 @@ def crear_tablas():
             FOREIGN KEY (producto_id) REFERENCES productos(id)
        )
     """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS clientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            email TEXT NOT NULL,
+            telefono TEXT NOT NULL, 
+            direccion TEXT NOT NULL
+        )
+    """)
+    try:
+        conn.execute("ALTER TABLE ventas ADD COLUMN cliente_id INTEGER")
+    except:
+        pass
     conn.commit()
     conn.close()
