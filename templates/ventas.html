@@ -39,6 +39,7 @@
         <table border="1" >
             <tr>
                 <th>ID</th>
+                <th>Cliente</th>
                 <th>Fecha</th>
                 <th>nombre</th>
                 <th>cantidad</th>
@@ -49,6 +50,7 @@
             {% for v in ventas %}
             <tr>
                 <td>{{ v.venta_id }}</td>
+                <td>{{ v.cliente_nombre or "NN" }}</td>
                 <td>{{ v.fecha }}</td>
                 <td>{{ v.nombre }}</td>
                 <td>{{ v.cantidad }}</td>
